@@ -34,6 +34,17 @@ int main()
   dividend /= factor;
 
   printf("%d %d\n", divisor, dividend);
+
+    int integer = dividend / divisor;
+  dividend = dividend % divisor;
   
+  if (dividend < 0)
+    dividend = -dividend;
+
+  if (dividend == 0)
+    divisor = 1;
+
+  printf("%d\n%d\n%d\n", integer, dividend, divisor);
+
   return 0;
 }
