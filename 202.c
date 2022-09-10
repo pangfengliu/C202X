@@ -10,13 +10,31 @@ int main()
 #ifdef DEBUG
   printf("%d %d\n", newb, newf);
 #endif
+
   int divisor, dividend;
   switch (d) {			/* addition */
   case 0:
     divisor = c * g;
     dividend = g * newb + c * newf;
     break;
+  case 1:
+    divisor = c * g;
+    dividend = g * newb - c * newf;
+    break;
+  case 2:
+    divisor = c * g;
+    dividend = newb * newf;
+    break;
+  case 3:
+    divisor = c * newf;
+    dividend = newb * g;
+    if (divisor < 0) {
+      divisor = -divisor;
+      dividend = -dividend;
+    }
+    break;
   }
+  
 #ifdef DEBUG
   printf("%d %d\n", divisor, dividend);
 #endif
