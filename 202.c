@@ -7,9 +7,9 @@ int main()
   
   int newb = (a < 0? a * c - b : a * c + b);
   int newf = (e < 0? e * g - f : e * g + f);
-
+#ifdef DEBUG
   printf("%d %d\n", newb, newf);
-
+#endif
   int divisor, dividend;
   switch (d) {			/* addition */
   case 0:
@@ -17,9 +17,9 @@ int main()
     dividend = g * newb + c * newf;
     break;
   }
-
+#ifdef DEBUG
   printf("%d %d\n", divisor, dividend);
-
+#endif
   int x = (dividend > 0? dividend : -dividend);
   int y = divisor;
 
@@ -32,10 +32,10 @@ int main()
 
   divisor /= factor;
   dividend /= factor;
-
+#ifdef DEBUG
   printf("%d %d\n", divisor, dividend);
-
-    int integer = dividend / divisor;
+#endif
+  int integer = dividend / divisor;
   dividend = dividend % divisor;
   
   if (dividend < 0)
