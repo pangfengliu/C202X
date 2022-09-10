@@ -10,5 +10,15 @@ int main()
 
   printf("%d %d\n", newb, newf);
 
+  int divisor, dividend;
+  switch (d) {			/* addition */
+  case 0:
+    divisor = c * g;
+    dividend = g * newb + c * newf;
+    break;
+  }
+
+  printf("%d %d\n", divisor, dividend);
+
   return 0;
 }
