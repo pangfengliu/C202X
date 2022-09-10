@@ -20,5 +20,20 @@ int main()
 
   printf("%d %d\n", divisor, dividend);
 
+  int x = (dividend > 0? dividend : -dividend);
+  int y = divisor;
+
+  while (x % y != 0) {
+    int remainder = x % y;
+    x = y;
+    y = remainder;
+  }
+  int factor = y;
+
+  divisor /= factor;
+  dividend /= factor;
+
+  printf("%d %d\n", divisor, dividend);
+  
   return 0;
 }
