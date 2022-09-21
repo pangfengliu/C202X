@@ -10,17 +10,22 @@ int max(int a, int b)
   return (a > b? a : b);
 }
 
-int lcm(int m, int n)
+int gcd(int x, int y)		/* x > y */
 {
-  int x = max(m, n);
-  int y = min(m, n);  
-  
   while (x % y != 0) {
     int remainder = x % y;
     x = y;
     y = remainder;
   }
-  return (m * n / y);
+  return y;
+}
+
+int lcm(int m, int n)
+{
+  int x = max(m, n);
+  int y = min(m, n);  
+  
+  return (m * n / gcd(x, y));
 }
 
 int main()
