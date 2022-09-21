@@ -4,8 +4,9 @@ int main()
 {
   int a, b, c, d;
   while (scanf("%d%d%d%d", &a, &b, &c, &d) != EOF) {
+#ifdef DEBUG
     printf("%d %d %d %d\n", a, b, c, d);
-
+#endif
     int ablcm;
     {
       int m = a;
@@ -27,12 +28,13 @@ int main()
       }
       ablcm = m * n / y;
     }
+#ifdef DEBUG
     printf("ablcm = %d\n", ablcm);
-
-    int cdlcm;
+#endif
+    int abclcm;
     {
-      int m = c;
-      int n = d;
+      int m = ablcm;
+      int n = c;
       int x, y;
       
       if (m > n) {
@@ -48,15 +50,16 @@ int main()
 	x = y;
 	y = remainder;
       }
-      cdlcm = m * n / y;
+      abclcm = m * n / y;
     }
-    printf("cdlcm = %d\n", cdlcm);
+#ifdef DEBUG
+    printf("abclcm = %d\n", abclcm);
+#endif
   
-
     int abcdlcm;
     {
-      int m = ablcm;
-      int n = cdlcm;
+      int m = abclcm;
+      int n = d;
       int x, y;
       
       if (m > n) {
@@ -74,7 +77,10 @@ int main()
       }
       abcdlcm = m * n / y;
     }
+#ifdef DEBUG
     printf("abcdlcm = %d\n", abcdlcm);
+#endif
+    printf("%d\n", abcdlcm / a);
   }
 
   return 0;
