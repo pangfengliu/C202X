@@ -28,6 +28,29 @@ int main()
       ablcm = m * n / y;
     }
     printf("ablcm = %d\n", ablcm);
+
+    int cdlcm;
+    {
+      int m = c;
+      int n = d;
+      int x, y;
+      
+      if (m > n) {
+	x = m;
+	y = n;
+      } else {
+	x = n;
+	y = m;
+      }
+      
+      while (x % y != 0) {
+	int remainder = x % y;
+	x = y;
+	y = remainder;
+      }
+      cdlcm = m * n / y;
+    }
+    printf("cdlcm = %d\n", cdlcm);
   }
   
   return 0;
