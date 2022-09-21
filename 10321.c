@@ -22,10 +22,7 @@ int gcd(int x, int y)		/* x > y */
 
 int lcm(int m, int n)
 {
-  int x = max(m, n);
-  int y = min(m, n);  
-  
-  return (m * n / gcd(x, y));
+  return (m * n / gcd(max(m, n), min(m, n)));
 }
 
 int main()
