@@ -46,6 +46,12 @@ void bishopAttack(bool stone[MAXR][MAXC], int row, int col, int R, int C)
   stone[row][col] = true;
 }
 
+void queenAttack(bool stone[MAXR][MAXC], int row, int col, int R, int C)
+{
+  rookAttack(stone, row, col, R, C);
+  bishopAttack(stone, row, col, R, C);
+}
+
 int main()
 {
   int R, C;
@@ -63,6 +69,9 @@ int main()
       break;
     case BISHOP:
       bishopAttack(stone, row, col, R, C);
+      break;
+    case QUEEN:
+      queenAttack(stone, row, col, R, C);
       break;
     }
   }
