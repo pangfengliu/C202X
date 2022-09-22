@@ -16,7 +16,8 @@ bool in(int row, int col, int R, int C)
   return (row >= 0 && row < R && col >= 0 && col < C);
 }
 
-void attack(bool stone[MAXR][MAXC], int row, int col, int dr, int dc, int R, int C)
+void attack(bool stone[MAXR][MAXC], int row, int col, int dr, int dc,
+	    int R, int C)
 {
   int r = row + dr;
   int c = col + dc;
@@ -36,6 +37,15 @@ void rookAttack(bool stone[MAXR][MAXC], int row, int col, int R, int C)
   stone[row][col] = true;
 }
 
+void bishopAttack(bool stone[MAXR][MAXC], int row, int col, int R, int C)
+{
+  int dr[] = {1, -1, 1, -1};
+  int dc[] = {1, -1, -1, 1};
+  for (int i = 0; i < DIR; i++)
+    attack(stone, row, col, dr[i], dc[i], R, C);
+  stone[row][col] = true;
+}
+
 int main()
 {
   int R, C;
@@ -50,6 +60,9 @@ int main()
       break;
     case ROOK:
       rookAttack(stone, row, col, R, C);
+      break;
+    case BISHOP:
+      bishopAttack(stone, row, col, R, C);
       break;
     }
   }
