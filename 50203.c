@@ -6,7 +6,7 @@
  
 int maxPoint(int a[], int b[])
 {
-  int maxv = a[0] + b[0], maxi;
+  int maxv = a[0] + b[0], maxi = 0;
   for (int i = 1; i < W; i++)
     if (a[i] + b[i] > maxv) {
       maxv = a[i] + b[i];
