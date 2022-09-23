@@ -2,6 +2,7 @@
  
 #define MAXN 100
 #define GREEN 0
+#define BLUE 1
  
 int main()
 {
@@ -29,15 +30,23 @@ int main()
 	for (int c = 0; c < n; c++)
 	  cube[index][r][c] = plate[r][c];
       break;
+ 
+    case BLUE:
+      for (int r = 0; r < n; r++)
+	for (int c = 0; c < n; c++)
+	  plate[c][n - r - 1] = cube[r][c][index];
+ 
+      for (int r = 0; r < n; r++)
+	for (int c = 0; c < n; c++)
+	  cube[r][c][index] = plate[r][c];
+      break;
     }
  
   }
-  for (int x = 0; x < n; x++) {
-    for (int y = 0; y < n; y++) {
+  for (int x = 0; x < n; x++) 
+    for (int y = 0; y < n; y++) 
       for (int z = 0; z < n; z++)
-	printf("%d ", cube[x][y][z]);
-      printf("\n");
-    }
-  }
+	printf("%d%c", cube[x][y][z], (z == n - 1)? '\n' : ' ');
+ 
   return 0;
 }
