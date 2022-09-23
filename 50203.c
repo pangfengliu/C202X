@@ -1,12 +1,13 @@
 #include <stdio.h>
+#include <assert.h>
  
 #define MAXN 100000
 #define W 3
  
 int maxPoint(int a[], int b[])
 {
-  int maxv = -1, maxi;
-  for (int i = 0; i < W; i++)
+  int maxv = a[0] + b[0], maxi;
+  for (int i = 1; i < W; i++)
     if (a[i] + b[i] > maxv) {
       maxv = a[i] + b[i];
       maxi = i;
@@ -19,7 +20,7 @@ int maxPoint(int a[], int b[])
 int main()
 {
   int n;
-  scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
  
   int bottom[P][W] = {{-1, 0, 1}, {0, 0, -1}, {0, 0, 0}, {-1, 0, -1}};
   int extra[P][W][W] = {{{1, 1, 0}, {2, 2, 1}, {2, 2, 1}},
