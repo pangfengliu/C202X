@@ -17,13 +17,18 @@ bool in(int row, int col, int R, int C)
   return(row >= 0 && row < R && col >= 0 && col < C);
 }
 
-#define WAYS 1
+#define WAYS 6
 #define OTHERS 2
 
 void findSame(int candy[MAXR][MAXC], int row, int col, int R, int C)
 {
   int startc = candy[row][col];
-  int diff[WAYS][OTHERS][2] = {{{1, 0}, {2, 0}}};
+  int diff[WAYS][OTHERS][2] = {{{1, 0}, {0, 1}},
+			       {{1, 0}, {1, 1}},
+			       {{0, 1}, {1, 1}},
+			       {{1, 0}, {2, 0}},
+			       {{0, 1}, {0, 2}},
+			       {{1, 0}, {1, -1}}};
 
   bool found = false;
   for (int w = 0; !found && w < WAYS; w++) {
