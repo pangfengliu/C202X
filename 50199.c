@@ -4,8 +4,6 @@
 #define MAXR 500
 #define MAXC 500
 
-#define WAYS 6
-#define OTHERS 2
 
 void printCandy(int candy[MAXR][MAXC], int R, int C)
 {
@@ -14,8 +12,39 @@ void printCandy(int candy[MAXR][MAXC], int R, int C)
       printf("%d%c", candy[r][c], c == C - 1? '\n' : ' ');
 }
 
+bool in(int row, int col, int R, int C)
+{
+  return(row >= 0 && row < R && col >= 0 && col < C);
+}
+
+#define WAYS 1
+#define OTHERS 2
+
 void findSame(int candy[MAXR][MAXC], int row, int col, int R, int C)
 {
+  int startc = candy[row][col];
+  int diff[WAYS][OTHERS][2] = {{{1, 0}, {2, 0}}};
+
+  bool found = false;
+  for (int w = 0; !found && w < WAYS; w++) {
+    bool same3 = true;
+    for (int other = 0; other < OTHERS; other++) {
+      int r = row + diff[w][other][0];
+      int c = col + diff[w][other][1];
+      if (!in(r, c, R, C) || candy[r][c] != startc) 
+	same3 = false;
+    }
+
+    if (same3) {
+      candy[row][col] = 0;
+      for (int other = 0; other < OTHERS; other++) {
+	int r = row + diff[w][other][0];
+	int c = col + diff[w][other][1];
+	candy[r][c] = 0;
+      }
+      found = true;
+    }
+  }
 }
 
 
