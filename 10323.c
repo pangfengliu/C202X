@@ -15,23 +15,15 @@ int main()
 #ifdef DEBUG
     printf("%d\n", number);
 #endif
-    switch (i) {
-    case 0:
+    if (i == 0) {
       maxSum = sum = number;
       maxNumTerm = numTerm = 1;
       maxFirstTerm = firstTerm = number;
-      break;
-    case 1:
-      sum += number;
-      numTerm++;
-      maxSum = sum;
-      maxNumTerm = numTerm;
-      diff = number - prev;
-      break;
-    default:
-      if (number - prev == diff) {
+    } else {
+      if ((i == 1) || number - prev == diff) {
 	sum += number;
 	numTerm++;
+	diff = number - prev;	/* for i == 1 */
       } else {			/* a new series */
 	sum = number + prev;
 	diff = number - prev;
