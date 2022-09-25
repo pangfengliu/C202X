@@ -12,9 +12,6 @@ int main()
   for (int i = 0; i < n; i++) {
     int number;
     assert(scanf("%d", &number) == 1);
-#ifdef DEBUG
-    printf("%d\n", number);
-#endif
     if (i == 0) {
       maxSum = sum = number;
       maxNumTerm = numTerm = 1;
@@ -31,15 +28,13 @@ int main()
       diff = number - prev;
 	
       if (sum > maxSum || (sum == maxSum && numTerm > maxNumTerm) ||
-	  (sum == maxSum && numTerm == maxNumTerm && firstTerm > maxFirstTerm)) {
+	  (sum == maxSum && numTerm == maxNumTerm &&
+	   firstTerm > maxFirstTerm)) {
 	maxSum = sum;
 	maxNumTerm = numTerm;
 	maxFirstTerm = firstTerm;
       }
     }
-#ifdef DEBUG
-    printf("sum = %d firstTerm = %d\n", sum, firstTerm);
-#endif
     prev = number;
   }
   printf("%d %d %d\n", maxSum, maxNumTerm, maxFirstTerm);
