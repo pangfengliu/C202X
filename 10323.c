@@ -23,14 +23,13 @@ int main()
       if ((i == 1) || number - prev == diff) {
 	sum += number;
 	numTerm++;
-	diff = number - prev;	/* for i == 1 */
       } else {			/* a new series */
 	sum = number + prev;
-	diff = number - prev;
 	numTerm = 2;
 	firstTerm = prev;
       }
-
+      diff = number - prev;
+	
       if (sum > maxSum || (sum == maxSum && numTerm > maxNumTerm) ||
 	  (sum == maxSum && numTerm == maxNumTerm && firstTerm > maxFirstTerm)) {
 	maxSum = sum;
