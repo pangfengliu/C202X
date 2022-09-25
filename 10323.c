@@ -18,13 +18,14 @@ int main()
     switch (i) {
     case 0:
       maxSum = sum = number;
-      numTerm = 1;
-      firstTerm = number;
+      maxNumTerm = numTerm = 1;
+      maxFirstTerm = firstTerm = number;
       break;
     case 1:
       sum += number;
-      maxSum = sum;
       numTerm++;
+      maxSum = sum;
+      maxNumTerm = numTerm;
       diff = number - prev;
       break;
     default:
