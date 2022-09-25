@@ -6,7 +6,9 @@ int main()
   int n;
   assert(scanf("%d", &n) == 1);
 
-  int sum, firstTerm, numTerm, diff;
+  int sum, firstTerm, numTerm, diff, prev;
+  int maxSum, maxFirstTerm, maxNumTerm;
+  
   for (int i = 0; i < n; i++) {
     int number;
     assert(scanf("%d", &number) == 1);
@@ -15,12 +17,39 @@ int main()
 #endif
     switch (i) {
     case 0:
-      sum = number;
+      maxSum = sum = number;
       numTerm = 1;
       firstTerm = number;
       break;
+    case 1:
+      sum += number;
+      maxSum = sum;
+      numTerm++;
+      diff = number - prev;
+      break;
+    default:
+      if (number - prev == diff) {
+	sum += number;
+	numTerm++;
+      } else {			/* a new series */
+	sum = number + prev;
+	diff = number - prev;
+	numTerm = 2;
+	firstTerm = prev;
+      }
+
+      if (sum > maxSum || (sum == maxSum && numTerm > maxNumTerm) ||
+	  (sum == maxSum && numTerm == maxNumTerm && firstTerm > maxFirstTerm)) {
+	maxSum = sum;
+	maxNumTerm = numTerm;
+	maxFirstTerm = firstTerm;
+      }
     }
+#ifdef DEBUG
+    printf("sum = %d firstTerm = %d\n", sum, firstTerm);
+#endif
+    prev = number;
   }
-  printf("%d %d %d\n", sum, numTerm, firstTerm);
+  printf("%d %d %d\n", maxSum, maxNumTerm, maxFirstTerm);
   return 0;
 }
