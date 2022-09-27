@@ -1,16 +1,6 @@
 #include <stdio.h>
 
-int min(int a, int b)
-{
-  return (a < b? a : b);
-}
-
-int max(int a, int b)
-{
-  return (a > b? a : b);
-}
-
-int gcd(int x, int y)		/* x > y */
+int gcd(int x, int y)
 {
   while (x % y != 0) {
     int remainder = x % y;
@@ -22,7 +12,7 @@ int gcd(int x, int y)		/* x > y */
 
 int lcm(int m, int n)
 {
-  return (m * n / gcd(max(m, n), min(m, n)));
+  return (m * n / gcd(m, n));
 }
 
 int main()
