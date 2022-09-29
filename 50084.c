@@ -27,7 +27,6 @@ int main()
   int time[MAXJ][MAXTPERJOB];
   for (int j = 0; j < J; j++) {
     assert(scanf("%d%d", &(Jready[j]), &(numTask[j])) == 2);
-    assert(Jready[j] == 0);
 #ifdef DEBUG
     printf("ready %d num %d\n", Jready[j], numTask[j]);
 #endif
