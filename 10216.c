@@ -10,6 +10,11 @@ int dec(int i, int N)
   return((N + i - 1) % N);
 }
  
+int left(int col, int N)
+{
+  return(dec(col, N));
+}
+ 
 int right(int col, int N)
 {
   return(inc(col, N));
@@ -36,7 +41,12 @@ int main()
 {
   int N, k, row, col;
   scanf("%d%d%d%d", &N, &k, &row, &col);
-
+ 
+  for (int i = 1; i < k; i++) {
+    row = down(row, N);
+    col = left(col, N);
+  }
+ 
   int matrix[MSIZE][MSIZE] = {0};
   for (int number = 1; number <= N * N; number++) {
     matrix[row][col] = number;
