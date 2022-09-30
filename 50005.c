@@ -43,8 +43,7 @@ int main()
     for (int j = 0; j < k; j++)
       assert(scanf("%d", &(pattern[i][j])) == 1);
  
-  int matchi, matchj;
-
+  int matchi = -1, matchj = -1;
   for (int i = 0; i < n - k + 1; i++)
     for (int j = 0; j < n - k + 1; j++) {
       if (matchNum(i, j, k, pattern, matrix) >= k * k - m &&
