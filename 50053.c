@@ -34,5 +34,15 @@ int main()
   }
   printf("numAuthors %d\n", numAuthors);
 
+  int sold[M] = {0};
+  for (int i = 0; i < numBooks; i++) {
+    char title[MAXLEN];
+    int copy;
+    assert(scanf("%s%d", title, &copy) == 2);
+    sold[search(author[search(title, book, numBooks)], authorName, numAuthors)] 
+      += copy;
+  }
+
+
   return 0;
 }
