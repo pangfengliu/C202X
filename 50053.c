@@ -32,8 +32,10 @@ int main()
       numAuthors++;
     }
   }
+#ifdef DEBUG
   printf("numAuthors %d\n", numAuthors);
-
+#endif
+  
   int sold[M] = {0};
   for (int i = 0; i < numBooks; i++) {
     char title[MAXLEN];
@@ -43,6 +45,16 @@ int main()
       += copy;
   }
 
+  int maxSold = 0;
+  int mostPopular;
+  for (int i = 0; i < numAuthors; i++) {
+    if (sold[i] > maxSold 
+    || (sold[i] == maxSold && strcmp(authorName[i], authorName[mostPopular]) < 0)) {
+      mostPopular = i;
+      maxSold = sold[i];
+    }
+  }
 
+  printf("%s %d\n", authorName[mostPopular], maxSold);
   return 0;
 }
