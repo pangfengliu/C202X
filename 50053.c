@@ -45,9 +45,9 @@ int main()
       += copy;
   }
 
-  int maxSold = 0;
-  int mostPopular;
-  for (int i = 0; i < numAuthors; i++) {
+  int maxSold = sold[0];
+  int mostPopular = 0;
+  for (int i = 1; i < numAuthors; i++) {
     if (sold[i] > maxSold 
     || (sold[i] == maxSold && strcmp(authorName[i], authorName[mostPopular]) < 0)) {
       mostPopular = i;
