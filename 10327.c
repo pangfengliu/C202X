@@ -63,12 +63,21 @@ int main()
   int height[MAXN][MAXN];
   computeHeight(N, height);
 
+  
   int heap[MAXS][MAXC][2] = {{{0}}};
   int tindex = 0;
+  bool paired = false;
+  int minfex1, mindex2;
   for (int row = 0; row < N; row++)
     for (int col = 0; col < N; col++, tindex++) {
-      printf("insert %d into heap\n", tower[row][col][height[row][col] - 1]);
-      insert(heap, tower[row][col][height[row][col] - 1], S, tindex);
+      int key = tower[row][col][height[row][col] - 1];
+      printf("insert %d into heap\n", key);
+      if ((mtindex1 = match(heap, key, S, tindex)) == -1)
+	insert(heap, key, S, tindex);
+      else {
+	paired = true;
+	mtindex2 = tindex;
+      }
     }
 
   for (int s = 0; s < S; s++) {
@@ -77,6 +86,7 @@ int main()
 	printf("(%d %d)", heap[s][c][KEY], heap[s][c][INDEX]);
     printf("\n");
   }
-  
+
+  printf("mtindex1 %d mtindex2 %d paired %d\n", mtindex1, mtindex2, paired);  
   return 0;
 }
