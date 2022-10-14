@@ -5,6 +5,11 @@
 #define MAXS (MAXN * MAXN)
 #define MAXC 10
 
+int max(int a, int b)
+{
+  return (a > b? a : b);
+}
+
 int main()
 {
   int N, S, C;
@@ -19,6 +24,13 @@ int main()
       for (int col = 0; col < layer; col++)
 	assert(scanf("%d", &(tower[row][col][N - layer - 1])) == 1);
 
+  int height[MAXN][MAXN];
+  for (int row = 0; row < N; row++)
+    for (int col = 0; col < N; col++) {
+      height[row][col] = N - max(row, col);
+      printf("height [%d][%d] = %d\n", row, col, height[row][col]);
+    }
+  
   return 0;
 }
   
