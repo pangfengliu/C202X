@@ -31,9 +31,14 @@ void computeHeight(int N, int height[MAXN][MAXN])
     }
 }
 
+int f(int key, int S)
+{
+  return ((77 * key + 2222) % S);
+}
+
 void insert(int heap[MAXS][MAXC][2], int key, int S, int tindex)
 {
-  int hindex = (77 * key + 2222) % S;
+  int hindex = f(key, S);
   for (int i = 0; i < MAXC; i++)
     if (heap[hindex][i][KEY] == 0) {
       heap[hindex][i][KEY] = key;
