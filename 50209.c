@@ -9,7 +9,8 @@
 int main()
 {
   char *key[R] = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
- 
+
+
   char start[S];
   assert(scanf("%s", start) == 1);
   assert(strlen(start) == 1);
@@ -23,6 +24,12 @@ int main()
     }
   }
   printf("%c\n", key[row][col]);
+
+  int length[R];
+  for (int i = 0; i < R; i++) {
+    length[i] = strlen(key[i]);
+    printf("the length of string[%d] is %d\n", i, length[i]);
+  }
 
   return 0;
 }
