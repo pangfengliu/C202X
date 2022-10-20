@@ -7,9 +7,9 @@ int main() {
   int size = 0;
   scanf("%d", &size);
  
-  void ** arrayA = malloc((size + 1) * sizeof(int*));
-  void ** arrayB = malloc((size + 1) * sizeof(int*));
-  void ** arrayC = malloc((size + 1) * sizeof(int*));
+  A *arrayA[size + 1];
+  B *arrayB[size + 1];
+  C *arrayC[size + 1];
  
   A matrixA[MAX];
   B matrixB[MAX];
@@ -23,9 +23,9 @@ int main() {
       for (int j = 0; j < ROW; j++) 
 	scanf("%d", &matrixB[n][i][j]);
  
-    arrayA[n] = &matrixA[n];
-    arrayB[n] = &matrixB[n];
-    arrayC[n] = &matrixC[n];
+    arrayA[n] = &(matrixA[n]);
+    arrayB[n] = &(matrixB[n]);
+    arrayC[n] = &(matrixC[n]);
   }
  
   arrayA[size] = NULL;
