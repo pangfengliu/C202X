@@ -43,12 +43,15 @@ void count(int **p[])
   while (*firstLevel != NULL) {
     int *thirdLevel = **firstLevel;
     count = insert(thirdLevel, thirdLevelPtrTable, object, frequency, count);
+#ifdef DEBUG
     printf("%d\n", *thirdLevel);
+#endif
     firstLevel++;
   }
+#ifdef DEBUG
   for (int i = 0; i < count; i++)
     printf("%d %d\n", object[i], frequency[i]);
-
+#endif
   sort(frequency, object, count);
   for (int i = 0; i < count; i++)
     printf("%d %d\n", object[i], frequency[i]);
