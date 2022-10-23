@@ -88,6 +88,24 @@ int getKey(int tower[MAXN][MAXN][MAXN], int row, int col,
   return tower[row][col][height[row][col] - 1];  
 }
 
+void pairing(int pair[], int matchIndex[], int row[], int col[], int S,
+	     const int mtindex[], int tower[MAXN][MAXN][MAXN],
+	     int height[MAXN][MAXN], int hashTable[MAXS][MAXC][2])
+{
+  for (int i = 0; i < 2; i++) {
+    pair[i] = 0;
+    matchIndex[i] = -1;
+    if (height[row[i]][col[i]] > 0) {
+      int key = getKey(tower, row[i], col[i], height);
+      matchIndex[i] = findRemove(hashTable, key, S);
+      if (matchIndex[i] == -1) /* no match */
+	insert(hashTable, key, S, mtindex[i]);
+      else
+	pair[i] = 1;
+    }
+  }
+}
+
 int main()
 {
   int N, S, C;
@@ -105,7 +123,7 @@ int main()
   int hashTable[MAXS][MAXC][2] = {{{0}}};
   int tindex = 0;
   int paired = 0;
-  int mtindex1, mtindex2, mkey;
+  int mtindex[2];
   for (int row = 0; row < N; row++)
     for (int col = 0; col < N; col++, tindex++) {
       int key = getKey(tower, row, col, height);
@@ -117,8 +135,8 @@ int main()
 	insert(hashTable, key, S, tindex);
       else {
 	paired++;
-	mtindex1 = matchIndex;
-	mtindex2 = tindex;
+	mtindex[0] = matchIndex;
+	mtindex[1] = tindex;
       }
     }
   assert(paired <= 1);
@@ -134,54 +152,32 @@ int main()
 #endif
 
     paired = 0;
-
-    int row1 = mtindex1 / N;
-    int col1 = mtindex1 % N;
-    int row2 = mtindex2 / N;
-    int col2 = mtindex2 % N;
-    int key1 = getKey(tower, row1, col1, height);
-    int key2 = getKey(tower, row2, col2, height);
+    int row[2] = {mtindex[0] / N, mtindex[1] / N};
+    int col[2] = {mtindex[0] % N, mtindex[1] % N};
+    int key1 = getKey(tower, row[0], col[0], height);
+    int key2 = getKey(tower, row[1], col[1], height);
     assert(key1 == key2);
     printf("%d ", key1);
-    height[row1][col1]--;	/* remove numbers from tower */
-    height[row2][col2]--;
+    height[row[0]][col[0]]--;	/* remove numbers from tower */
+    height[row[1]][col[1]]--;
 
-    if (height[row1][col1] > 0 && height[row2][col2] > 0 &&
-	getKey(tower, row1, col1, height) == getKey(tower, row2, col2, height)) {
+    if (height[row[0]][col[0]] > 0 && height[row[1]][col[1]] > 0 &&
+	getKey(tower, row[0], col[0], height) ==
+	getKey(tower, row[1], col[1], height)) {
       paired = 1;
       continue;
     }
-    
-    int pair1 = 0;
-    int matchIndex1 = -1;
-    if (height[row1][col1] > 0) {
-      key1 = getKey(tower, row1, col1, height);
-      matchIndex1 = findRemove(hashTable, key1, S);
-      if (matchIndex1 == -1) /* no match */
-	insert(hashTable, key1, S, mtindex1);
-      else
-	pair1 = 1;
-    }
 
-    int pair2 = 0;
-    int matchIndex2 = -1;
-    if (height[row2][col2] > 0) {
-      key2 = getKey(tower, row2, col2, height);
-      matchIndex2 = findRemove(hashTable, key2, S);
-      if (matchIndex2 == -1) /* no match */
-	insert(hashTable, key2, S, mtindex2);
-      else 
-	pair2 = 1;
-    }
-
-    paired = pair1 + pair2;
+    int pair[2], matchIndex[2];
+    pairing(pair, matchIndex, row, col, S, mtindex, tower, height, hashTable);
+    paired = pair[0] + pair[1];
     assert(paired <= 1);
     if (paired > 0) {
-      if (pair1 == 1) 
-	mtindex2 = matchIndex1;
+      if (pair[0] == 1) 
+	mtindex[1] = matchIndex[0];
       else {
-	assert(pair2 == 1);
-	mtindex1 = matchIndex2;
+	assert(pair[1] == 1);
+	mtindex[0] = matchIndex[1];
       }
     }
   }
