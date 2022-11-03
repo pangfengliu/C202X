@@ -92,16 +92,16 @@ char *getKey(Tower *tower, int row, int col)
   return (tower->string[row][col][tower->height[row][col] - 1]);  
 }
  
-void pairing(int pair[], Position match[], int row[], int col[], int S,
+void pairing(int pair[], Position match[], int row[], int col[], 
 	     const Position exposed[], Tower *tower,
-	     Hash hashTable[MAXS][MAXC], int K)
+	     Hash hashTable[MAXS][MAXC])
 {
   for (int i = 0; i < 2; i++) {
     pair[i] = 0;
     match[i].row = -1;
     if (tower->height[row[i]][col[i]] > 0) {
       char *key = getKey(tower, row[i], col[i]);
-      int hash = f(key, K);
+      int hash = f(key, tower->N * tower->N);
       match[i] = findRemove(hashTable, key, hash);
       if (match[i].row == -1) /* no match */
 	insert(hashTable, key, exposed[i], hash);
@@ -168,8 +168,7 @@ int main()
  
     int pair[2];
     Position match[2];
-    pairing(pair, match, row, col, S, exposed, &tower, hashTable,
-	    tower.N * tower.N);
+    pairing(pair, match, row, col, exposed, &tower, hashTable);
     paired = pair[0] + pair[1];
     assert(paired <= 1);
     if (paired > 0) {
