@@ -92,15 +92,15 @@ char *getKey(Tower *tower, int row, int col)
   return (tower->string[row][col][tower->height[row][col] - 1]);  
 }
  
-void pairing(int pair[], Position match[], int row[], int col[], 
+void pairing(int pair[], Position match[], 
 	     const Position exposed[], Tower *tower,
 	     Hash hashTable[MAXS][MAXC])
 {
   for (int i = 0; i < 2; i++) {
     pair[i] = 0;
     match[i].row = -1;
-    if (tower->height[row[i]][col[i]] > 0) {
-      char *key = getKey(tower, row[i], col[i]);
+    if (tower->height[exposed[i].row][exposed[i].col] > 0) {
+      char *key = getKey(tower, exposed[i].row, exposed[i].col);
       int hash = f(key, tower->N * tower->N);
       match[i] = findRemove(hashTable, key, hash);
       if (match[i].row == -1) /* no match */
@@ -145,30 +145,27 @@ int main()
  
   /* there will be a pair to remove at exposed1 and exposed2 */
   while (paired > 0) {
- 
-#ifdef DEBUG
-    printf("\nexposed1 %d exposed2 %d paired %d\n", exposed[0], exposed[0], paired);
-#endif
- 
     paired = 0;
-    int row[2] = {exposed[0].row, exposed[1].row};
-    int col[2] = {exposed[0].col, exposed[1].col};
-    char *key1 = getKey(&tower, row[0], col[0]);
-    char *key2 = getKey(&tower, row[1], col[1]);
-    assert(strcmp(key1, key2) == 0);
-    printf("%s\n", key1);
-    tower.height[row[0]][col[0]]--;    /* remove numbers from tower */
-    tower.height[row[1]][col[1]]--;
+    char *key[2];
+    for (int i = 0; i < 2; i++) {
+      key[i] = getKey(&tower, exposed[i].row, exposed[i].col);
+    }
+    assert(strcmp(key[0], key[1]) == 0);
+    printf("%s\n", key[0]);
+    for (int i = 0; i < 2; i++) 
+      tower.height[exposed[i].row][exposed[i].col]--;
  
-    if (tower.height[row[0]][col[0]] > 0 && tower.height[row[1]][col[1]] > 0 &&
-	getKey(&tower, row[0], col[0]) == getKey(&tower, row[1], col[1])) {
+    if (tower.height[exposed[0].row][exposed[0].col] > 0 &&
+	tower.height[exposed[1].row][exposed[1].col] > 0 &&
+	getKey(&tower, exposed[0].row, exposed[0].col) ==
+	getKey(&tower, exposed[1].row, exposed[1].col)) {
       paired = 1;
       continue;
     }
  
     int pair[2];
     Position match[2];
-    pairing(pair, match, row, col, exposed, &tower, hashTable);
+    pairing(pair, match, exposed, &tower, hashTable);
     paired = pair[0] + pair[1];
     assert(paired <= 1);
     if (paired > 0) {
