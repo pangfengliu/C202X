@@ -57,7 +57,7 @@ int f(char s[], int K)
 }
  
 /* find key in the hash table, if found remove it and return its tower
-   index, if not return -1 */
+   index, if not return (-1, -1) */
  
 Position findRemove(Hash hashTable[MAXS][MAXC], char key[], int hash)
 {
@@ -128,9 +128,6 @@ int main()
     for (int col = 0; col < tower.N; col++) {
       	Position current = {row, col};
       char *key = getKey(&tower, row, col);
-#ifdef DEBUG
-      printf("insert %s into hashTable\n", key);
-#endif
       int hash = f(key, tower.N * tower.N);
       Position match = findRemove(hashTable, key, hash);
       if (match.row == -1)    /* not found */ 
