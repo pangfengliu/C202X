@@ -40,7 +40,7 @@ int f(char s[], int K)
   int len = strlen(s);
   int v = 0;
   for (int i = 0; i < len; i++)
-    v += v * 29 + (s[i] - 'a' + 1);
+    v = v * 29 + (s[i] - 'a' + 1);
   return (v % K);
 }
 
