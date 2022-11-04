@@ -29,16 +29,13 @@ void mergeSort(int keys[], int n)
   int leftIndex = 0;
   int rightIndex = 0;
   int index = 0;
-  while ((leftIndex < leftLength) || (rightIndex < rightLength)) {
-    if (leftIndex == leftLength)
-      keys[index++] = right[rightIndex++];
-    else if (rightIndex == rightLength)
-      keys[index++] = left[leftIndex++];
-    else if (left[leftIndex] < right[rightIndex]) 
+  while ((leftIndex < leftLength) || (rightIndex < rightLength)) 
+    if (rightIndex == rightLength ||
+    (leftIndex < leftLength && left[leftIndex] < right[rightIndex]))
       keys[index++] = left[leftIndex++];
     else
       keys[index++] = right[rightIndex++];
-  }
+ 
   assert(leftIndex == leftLength && rightIndex == rightLength);
   printKeys(keys, n);
 }  
