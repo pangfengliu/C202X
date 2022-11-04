@@ -9,6 +9,20 @@ void printKeys(int keys[], int n)
     printf("%d%c", keys[i], (i == n - 1)? '\n' : ' ');
 }
  
+void merge(int left[], int leftIndex, int leftLength,
+       int right[], int rightIndex, int rightLength,
+       int keys[], int index)
+{
+  if ((leftIndex == leftLength) && (rightIndex == rightLength))
+    return;
+  if (rightIndex == rightLength ||
+      (leftIndex < leftLength && left[leftIndex] < right[rightIndex])) 
+    keys[index++] = left[leftIndex++];
+  else
+    keys[index++] = right[rightIndex++];
+ 
+  merge(left, leftIndex, leftLength, right, rightIndex, rightLength, keys, index);
+}
 void mergeSort(int keys[], int n)
 {
   printKeys(keys, n);
@@ -26,17 +40,7 @@ void mergeSort(int keys[], int n)
   mergeSort(left, leftLength);
   mergeSort(right, rightLength);
  
-  int leftIndex = 0;
-  int rightIndex = 0;
-  int index = 0;
-  while ((leftIndex < leftLength) || (rightIndex < rightLength)) 
-    if (rightIndex == rightLength ||
-    (leftIndex < leftLength && left[leftIndex] < right[rightIndex]))
-      keys[index++] = left[leftIndex++];
-    else
-      keys[index++] = right[rightIndex++];
- 
-  assert(leftIndex == leftLength && rightIndex == rightLength);
+  merge(left, 0, leftLength, right, 0, rightLength, keys, 0);
   printKeys(keys, n);
 }  
  
