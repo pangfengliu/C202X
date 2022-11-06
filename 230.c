@@ -5,26 +5,33 @@ int max(int a, int b)
 {
   return (a > b? a: b);
 }
- 
-int maxValue(int W, int i, int weight[], int value[], int n)
+
+typedef struct Obj {
+  int weight;
+  int value;
+} Object;
+
+int maxValue(int W, int i, Object object[], int n)
 {
+  Object obj = object[i];
   if (i >= n)
     return 0;
-  if (weight[i] > W)
-    return maxValue(W, i + 1, weight, value, n);
+  if (obj.weight > W)
+    return maxValue(W, i + 1, object, n);
   else
-    return (max(maxValue(W - weight[i], i + 1, weight, value, n) + value[i],
-        maxValue(W, i + 1, weight, value, n)));
+    return (max(maxValue(W - obj.weight, i + 1, object, n) + obj.value,
+		maxValue(W, i + 1, object, n)));
 }
  
 int main()
 {
   int n, W;
   assert(scanf("%d%d", &n, &W) == 2);
-  int weight[n], value[n];
+  
+  Object object[n];
   for (int i = 0; i < n; i++)
-    assert(scanf("%d%d", &weight[i], &value[i]) == 2);
+    assert(scanf("%d%d", &(object[i].weight), &(object[i].value)) == 2);
  
-  printf("%d\n", maxValue(W, 0, weight, value, n));
+  printf("%d\n", maxValue(W, 0, object, n));
   return 0;
 }
