@@ -8,6 +8,12 @@
 #define MAXN 20
 #define MAXSTRINGP1 51
 
+typedef struct word {
+  int cost;
+  char string[MAXSTRINGP1];
+} Word;
+
+
 void incCount(int count[LETTERS], char *string)
 {
   int length = strlen(string);
@@ -36,8 +42,7 @@ int min(int x, int y)
   return(x < y? x : y);
 }
  
-int select(char word[MAXN][MAXSTRINGP1], int cost[MAXN],
-	   int count[LETTERS], int currentCost, 
+int select(Word word[MAXN], int count[LETTERS], int currentCost, 
 	   int wordIndex, int N)
 {
   if (ok(count))
@@ -46,16 +51,16 @@ int select(char word[MAXN][MAXSTRINGP1], int cost[MAXN],
   if (wordIndex == N)
     return INT32_MAX;
  
-  incCount(count, word[wordIndex]);
+  incCount(count, word[wordIndex].string);
   int selectCost = 
-    select(word, cost, count, currentCost + cost[wordIndex], wordIndex + 1, N);
-  decCount(count, word[wordIndex]);
+    select(word, count, currentCost + word[wordIndex].cost,
+	   wordIndex + 1, N);
+  decCount(count, word[wordIndex].string);
   int notSelectCost = 
-    select(word, cost, count, currentCost, wordIndex + 1, N);
+    select(word, count, currentCost, wordIndex + 1, N);
  
   return min(selectCost, notSelectCost);
 }
-
 
 int main()
 {
@@ -63,13 +68,12 @@ int main()
   assert(scanf("%d", &N) == 1);
   assert(N <= MAXN);
  
-  char word[MAXN][MAXSTRINGP1];
-  int cost[MAXN];
+  Word word[MAXN];
   for (int i = 0; i < N; i++) 
-    assert(scanf("%s%d", word[i], &(cost[i])) == 2);
+    assert(scanf("%s%d", word[i].string, &(word[i].cost)) == 2);
  
   int count[LETTERS] = {0};
-  printf("%d\n", select(word, cost, count, 0, 0, N));
+  printf("%d\n", select(word, count, 0, 0, N));
  
   return 0;
 }
