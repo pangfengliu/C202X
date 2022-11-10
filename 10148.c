@@ -31,14 +31,10 @@ int select(Word word[MAXN], int covered, int currentCost,
   if (wordIndex == N)
     return INT32_MAX;
  
-  int selectCost = 
-    select(word, covered | word[wordIndex].covered,
-	   currentCost + word[wordIndex].cost,
-	   wordIndex + 1, N);
-  int notSelectCost = 
-    select(word, covered, currentCost, wordIndex + 1, N);
- 
-  return min(selectCost, notSelectCost);
+  return min(select(word, covered | word[wordIndex].covered,
+		    currentCost + word[wordIndex].cost,
+		    wordIndex + 1, N),
+	     select(word, covered, currentCost, wordIndex + 1, N));
 }
 
 int main()
