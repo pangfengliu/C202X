@@ -4,23 +4,27 @@
 #include <stdbool.h>
 #include <assert.h>
 
-void incCount(int count[], char *string)
+#define LETTERS 26
+#define MAXN 20
+#define MAXSTRINGP1 51
+
+void incCount(int count[LETTERS], char *string)
 {
   int length = strlen(string);
   for (int i = 0; i < length; i++)
     count[string[i] - 'a']++;
 }
  
-void decCount(int count[], char *string)
+void decCount(int count[LETTERS], char *string)
 {
   int length = strlen(string);
   for (int i = 0; i < length; i++)
     count[string[i] - 'a']--;
 }
  
-bool ok(int count[26])
+bool ok(int count[LETTERS])
 {
-  for (int i = 0; i < 26; i++)
+  for (int i = 0; i < LETTERS; i++)
     if (count[i] == 0)
       return false;
  
@@ -32,7 +36,8 @@ int min(int x, int y)
   return(x < y? x : y);
 }
  
-int select(char word[][51], int cost[], int count[], int currentCost, 
+int select(char word[MAXN][MAXSTRINGP1], int cost[MAXN],
+	   int count[LETTERS], int currentCost, 
 	   int wordIndex, int N)
 {
   if (ok(count))
@@ -50,18 +55,20 @@ int select(char word[][51], int cost[], int count[], int currentCost,
  
   return min(selectCost, notSelectCost);
 }
- 
+
+
 int main()
 {
   int N;
   assert(scanf("%d", &N) == 1);
+  assert(N <= MAXN);
  
-  char word[20][51];
-  int cost[20];
+  char word[MAXN][MAXSTRINGP1];
+  int cost[MAXN];
   for (int i = 0; i < N; i++) 
     assert(scanf("%s%d", word[i], &(cost[i])) == 2);
  
-  int count[26] = {0};
+  int count[LETTERS] = {0};
   printf("%d\n", select(word, cost, count, 0, 0, N));
  
   return 0;
