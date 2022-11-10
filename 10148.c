@@ -10,54 +10,33 @@
 
 typedef struct word {
   int cost;
+  int covered;
   char string[MAXSTRINGP1];
 } Word;
-
-
-void incCount(int count[LETTERS], char *string)
-{
-  int length = strlen(string);
-  for (int i = 0; i < length; i++)
-    count[string[i] - 'a']++;
-}
- 
-void decCount(int count[LETTERS], char *string)
-{
-  int length = strlen(string);
-  for (int i = 0; i < length; i++)
-    count[string[i] - 'a']--;
-}
- 
-bool ok(int count[LETTERS])
-{
-  for (int i = 0; i < LETTERS; i++)
-    if (count[i] == 0)
-      return false;
- 
-  return true;
-}
  
 int min(int x, int y)
 {
   return(x < y? x : y);
 }
  
-int select(Word word[MAXN], int count[LETTERS], int currentCost, 
+int select(Word word[MAXN], int covered, int currentCost, 
 	   int wordIndex, int N)
 {
-  if (ok(count))
+#ifdef DEBUG
+  printf("covered %x target %x\n", covered, ((1 << LETTERS) - 1));
+#endif
+  if (covered == ((1 << LETTERS) - 1))
     return currentCost;
  
   if (wordIndex == N)
     return INT32_MAX;
  
-  incCount(count, word[wordIndex].string);
   int selectCost = 
-    select(word, count, currentCost + word[wordIndex].cost,
+    select(word, covered | word[wordIndex].covered,
+	   currentCost + word[wordIndex].cost,
 	   wordIndex + 1, N);
-  decCount(count, word[wordIndex].string);
   int notSelectCost = 
-    select(word, count, currentCost, wordIndex + 1, N);
+    select(word, covered, currentCost, wordIndex + 1, N);
  
   return min(selectCost, notSelectCost);
 }
@@ -69,11 +48,16 @@ int main()
   assert(N <= MAXN);
  
   Word word[MAXN];
-  for (int i = 0; i < N; i++) 
+  for (int i = 0; i < N; i++) {
     assert(scanf("%s%d", word[i].string, &(word[i].cost)) == 2);
+    int len = strlen(word[i].string);
+    word[i].covered = 0;
+    for (int j = 0; j < len; j++)
+      word[i].covered |= (1 << (word[i].string[j] - 'a'));
+  }
  
-  int count[LETTERS] = {0};
-  printf("%d\n", select(word, count, 0, 0, N));
+  int covered = 0;
+  printf("%d\n", select(word, covered, 0, 0, N));
  
   return 0;
 }
