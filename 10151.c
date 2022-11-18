@@ -21,7 +21,7 @@ int shortestCycle(int dist[MAXN][MAXN], bool visited[MAXN], int citiesLeft,
     if (!visited[next]) {
       visited[next] = true;
       int distance = shortestCycle(dist, visited, citiesLeft - 1,
-                   cost + dist[now][next], next, N);
+				   cost + dist[now][next], next, N);
       minDistance = min(minDistance, distance);
       visited[next] = false;
     }
