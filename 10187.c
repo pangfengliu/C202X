@@ -15,7 +15,7 @@ void printClub(int club[], int num)
     printf("%d\n", club[i]);
 }
  
-void findDisjointSet(int club, int numClub,
+bool findDisjointSet(int club, int numClub,
              uint64_t clubMember[],
              uint64_t peopleSelected,
              int numClubSelected, int numClubToSelect,
@@ -23,22 +23,23 @@ void findDisjointSet(int club, int numClub,
 {
   if (numClubSelected == numClubToSelect) {
     printClub(clubSelected, numClubToSelect);
-    exit(0);
+    return true;
   }
  
   if (club >= numClub)
-    return;
+    return false;
  
   if (disjoint(peopleSelected, clubMember[club])) {     /* select */
     clubSelected[numClubSelected] = club;
-    findDisjointSet(club + 1, numClub, clubMember,
-		    peopleSelected | clubMember[club],
-		    numClubSelected + 1, numClubToSelect, clubSelected);
+    if (findDisjointSet(club + 1, numClub, clubMember,
+			peopleSelected | clubMember[club],
+			numClubSelected + 1, numClubToSelect, clubSelected))
+      return true;
   }
   
   /* not select */
-  findDisjointSet(club + 1, numClub, clubMember, peopleSelected,
-		  numClubSelected, numClubToSelect, clubSelected);
+  return findDisjointSet(club + 1, numClub, clubMember, peopleSelected,
+			 numClubSelected, numClubToSelect, clubSelected);
 }
 
 #define MAXNUMCLUB 101
