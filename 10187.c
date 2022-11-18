@@ -2,10 +2,43 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <stdlib.h>
  
 bool disjoint(uint64_t a, uint64_t b)
 {
   return ((a & b) == 0);
+}
+
+void printClub(int club[], int num)
+{
+  for (int i = 0; i < num; i++)
+    printf("%d\n", club[i]);
+}
+ 
+void findDisjointSet(int club, int numClub,
+             uint64_t clubMember[],
+             uint64_t peopleSelected,
+             int numClubSelected, int numClubToSelect,
+             int clubSelected[])
+{
+  if (numClubSelected == numClubToSelect) {
+    printClub(clubSelected, numClubToSelect);
+    exit(0);
+  }
+ 
+  if (club >= numClub)
+    return;
+ 
+  if (disjoint(peopleSelected, clubMember[club])) {     /* select */
+    clubSelected[numClubSelected] = club;
+    findDisjointSet(club + 1, numClub, clubMember,
+		    peopleSelected | clubMember[club],
+		    numClubSelected + 1, numClubToSelect, clubSelected);
+  }
+  
+  /* not select */
+  findDisjointSet(club + 1, numClub, clubMember, peopleSelected,
+		  numClubSelected, numClubToSelect, clubSelected);
 }
 
 #define MAXNUMCLUB 101
@@ -33,7 +66,12 @@ int main()
     }
   }
 
-  for (int club = 0; club < numClub; club++) 
+#ifdef DEBUG
+  for (int club = 0; club < numClub; club++)
     printf("%lu\n", clubMember[club]);
+#endif
 
+  int clubSelected[numClub];
+  findDisjointSet(0, numClub, clubMember, 0, 0, numClubToSelect, clubSelected);
+  return 0;
 }
