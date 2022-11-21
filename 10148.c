@@ -19,8 +19,8 @@ int min(int x, int y)
   return(x < y? x : y);
 }
  
-int select(Word word[MAXN], int covered, int currentCost, 
-	   int wordIndex, int N)
+int select(const Word word[MAXN], const int covered, const int currentCost, 
+	   const int wordIndex, const int N)
 {
 #ifdef DEBUG
   printf("covered %x target %x\n", covered, ((1 << LETTERS) - 1));
