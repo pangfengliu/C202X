@@ -8,21 +8,21 @@
 #define MAXN 20
 #define MAXSTRINGP1 51
 
-void incCount(int count[LETTERS], char *string)
+void incCount(int count[LETTERS], const char *string)
 {
   int length = strlen(string);
   for (int i = 0; i < length; i++)
     count[string[i] - 'a']++;
 }
  
-void decCount(int count[LETTERS], char *string)
+void decCount(int count[LETTERS], const char *string)
 {
   int length = strlen(string);
   for (int i = 0; i < length; i++)
     count[string[i] - 'a']--;
 }
  
-bool ok(int count[LETTERS])
+bool ok(const int count[LETTERS])
 {
   for (int i = 0; i < LETTERS; i++)
     if (count[i] == 0)
@@ -36,9 +36,9 @@ int min(int x, int y)
   return(x < y? x : y);
 }
  
-int select(char word[MAXN][MAXSTRINGP1], int cost[MAXN],
-	   int count[LETTERS], int currentCost, 
-	   int wordIndex, int N)
+int select(const char word[MAXN][MAXSTRINGP1], const int cost[MAXN],
+	   const int count[LETTERS], const int currentCost, 
+	   const int wordIndex, const int N)
 {
   if (ok(count))
     return currentCost;

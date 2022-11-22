@@ -17,21 +17,6 @@ int insert(int *ptr, int *ptrTable[], int object[], int frequency[],
   return currentCount + 1;
 }
 
-void sort(int frequency[], int object[], int count)
-{
-  for (int i = count - 2; i >= 0; i--)
-    for (int j = 0; j <= i; j++)
-      if (frequency[j] > frequency[j + 1] || 
-      (frequency[j] == frequency[j + 1] && object[j] >= object[j + 1])) {
-    int temp = frequency[j];
-    frequency[j] = frequency[j + 1];
-    frequency[j + 1] = temp;
-    temp = object[j];
-    object[j] = object[j + 1];
-    object[j + 1] = temp;
-      }
-}
-
 void count(int **p[])
 {
   int ***firstLevel = p;
@@ -43,16 +28,9 @@ void count(int **p[])
   while (*firstLevel != NULL) {
     int *thirdLevel = **firstLevel;
     count = insert(thirdLevel, thirdLevelPtrTable, object, frequency, count);
-#ifdef DEBUG
     printf("%d\n", *thirdLevel);
-#endif
     firstLevel++;
   }
-#ifdef DEBUG
-  for (int i = 0; i < count; i++)
-    printf("%d %d\n", object[i], frequency[i]);
-#endif
-  sort(frequency, object, count);
   for (int i = 0; i < count; i++)
     printf("%d %d\n", object[i], frequency[i]);
 }
