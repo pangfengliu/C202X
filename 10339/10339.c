@@ -11,7 +11,7 @@ typedef struct {
   uint64_t selected;
 } Selection;
 
-void printSelection(Selection selection, int n)
+void printSelection(const Selection selection, const int n)
 {
   for (int i = 0; i < n; i++)
     if (selection.selected & ((uint64_t)(1) << i))
