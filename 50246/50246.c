@@ -16,18 +16,16 @@ uint64_t minSumSqu(const uint64_t number[], const int i,
     return *best;
   }
 
-  if (currentSum >= *best)
-    return UINT64_MAX;
-
   uint64_t minSum = UINT64_MAX;
   for (int g = 0; g < K; g++) {
     uint64_t oldSum = sum[g];
-    sum[g] += number[i];
-    minSum =
-      min(minSum, minSumSqu(number, i + 1, sum,
-			    currentSum + 2 * oldSum * number[i] + number[i] * number[i],
-			    K, N, best));
-    sum[g] -= number[i];
+    uint64_t newSum = currentSum + 2 * oldSum * number[i] + number[i] * number[i];
+    if (newSum < *best) {
+      sum[g] += number[i];
+      minSum =
+	min(minSum, minSumSqu(number, i + 1, sum, newSum, K, N, best));
+      sum[g] -= number[i];
+    }
   }
   return minSum;
 }
