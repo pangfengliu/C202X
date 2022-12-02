@@ -45,6 +45,7 @@ int main()
 
   uint64_t sum[MAXN] = {0};
   uint64_t best = UINT64_MAX;
-  printf("%lu\n", minSumSqu(number, 0, sum, 0, K, N, &best));
+  sum[0] = number[0];
+  printf("%lu\n", minSumSqu(number, 1, sum, sum[0] * sum[0], K, N, &best));
   return 0;
 }
