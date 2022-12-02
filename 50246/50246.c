@@ -9,23 +9,20 @@ uint64_t min(uint64_t a, uint64_t b)
   
 uint64_t minSumSqu(const uint64_t number[], const int i, 
 		   uint64_t sum[], const uint64_t currentSum,
-		   const int K, const int N, uint64_t *best)
+		   const int K, const int N)
 {
   if (i == N) {
-    *best = min(*best, currentSum);
-    return *best;
+    return currentSum;
   }
 
   uint64_t minSum = UINT64_MAX;
   for (int g = 0; g < K; g++) {
     uint64_t oldSum = sum[g];
     uint64_t newSum = currentSum + 2 * oldSum * number[i] + number[i] * number[i];
-    if (newSum < *best) {
-      sum[g] += number[i];
-      minSum =
-	min(minSum, minSumSqu(number, i + 1, sum, newSum, K, N, best));
-      sum[g] -= number[i];
-    }
+    sum[g] += number[i];
+    minSum =
+      min(minSum, minSumSqu(number, i + 1, sum, newSum, K, N));
+    sum[g] -= number[i];
   }
   return minSum;
 }
@@ -44,8 +41,7 @@ int main()
     assert(scanf("%lu", &(number[i])) == 1);
 
   uint64_t sum[MAXN] = {0};
-  uint64_t best = UINT64_MAX;
   sum[0] = number[0];
-  printf("%lu\n", minSumSqu(number, 1, sum, sum[0] * sum[0], K, N, &best));
+  printf("%lu\n", minSumSqu(number, 1, sum, sum[0] * sum[0], K, N));
   return 0;
 }
