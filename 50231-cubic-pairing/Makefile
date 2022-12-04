@@ -1,7 +1,7 @@
-all: 10327
+all: 50231
 
 CC = gcc
 CFLAGS = -std=c99 -O2 -Wall
 
 clean:
-	rm *~ *.o 10327 [0-9]
+	rm *~ *.o 50231 [0-9]
