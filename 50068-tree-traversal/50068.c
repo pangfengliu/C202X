@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
- 
+
+#define MAXPATH 1000
+
 void traversal(Node *root, int N, int command[])
 {
-  Node *path[1000];
+  Node *path[MAXPATH];
   path[0] = root;
   int current = 0;
  
@@ -24,34 +26,34 @@ void traversal(Node *root, int N, int command[])
     case 3:
       leftChild = path[current]->left;
       if (leftChild == NULL) {
-    printf("%d\n", path[current]->label);
-    return;
+	printf("%d\n", path[current]->label);
+	return;
       } else {
-    current++;
-    path[current] = leftChild;
+	current++;
+	path[current] = leftChild;
       }
       break;
     case 4:
       rightChild = path[current]->right;
       if (rightChild == NULL) {
-    printf("%d\n", path[current]->label);
-    return;
+	printf("%d\n", path[current]->label);
+	return;
       } else {
-    current++;
-    path[current] = rightChild;
+	current++;
+	path[current] = rightChild;
       }
       break;
     case 5:
       parent = path[current - 1];
       if (parent->left == path[current]) /* left */
-    sibling = parent->right;
+	sibling = parent->right;
       else
-    sibling = parent->left;
+	sibling = parent->left;
       if (sibling == NULL) {
-    printf("%d\n", path[current]->label);
-    return;
+	printf("%d\n", path[current]->label);
+	return;
       } else
-    path[current] = sibling;
+	path[current] = sibling;
       break;
     default:
       printf("invalid command %d\n", command[i]);
