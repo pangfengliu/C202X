@@ -20,8 +20,6 @@ int listLength(Node *ptr)
  
 Node *skipHalf(Node *head, int n) 
 {
-  assert((head != NULL) && (n > 0));
- 
   for (int i = 0; i < n - 1; i++)
     head = head->left;
  
@@ -40,7 +38,6 @@ int firstHalfLength(int n)
 {
   return (n - secondHalfLength(n));
 }
- 
  
 void cut(List list, List *first, List *second)
 {
@@ -79,9 +76,6 @@ Node *BuildListTree(List list1, List list2)
     list2.ptr = list2.ptr->left;
     list2.length--;
   }
-#ifdef DEBUG
-  printf("root %d\n", root->val);
-#endif
  
   List list1first, list1second;
   List list2first, list2second;
