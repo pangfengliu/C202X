@@ -18,16 +18,17 @@ void chasing(int **A[], int a, int *B[], int b, int C[], int c)
   for (int i = 0; i < b; i++)
     B[i] = NULL;
   char line[100];
-  while (fgets(line, 100, stdin) != NULL) {
+ 
+  while (fgets(line, 100, stdin) != NULL) { /* the continue goes here */
     char *first = strtok(line, " \t\n");
     if (first == NULL) {
       printf("0\n");
-      break;
+      continue;
     }
     char *index1ptr = strtok(NULL, " \t\n");
     if (index1ptr == NULL) {
       printf("0\n");
-      break;
+      continue;
     }
  
     int index1;
@@ -35,19 +36,19 @@ void chasing(int **A[], int a, int *B[], int b, int C[], int c)
       index1 = atoi(index1ptr);
     else {
       printf("0\n");
-      break;
+      continue;
     }
  
     char *second = strtok(NULL, " \t\n");
     if (second == NULL) {
       printf("0\n");
-      break;
+      continue;
     }
  
     char *index2ptr = strtok(NULL, " \t\n");
     if (index2ptr == NULL) {
       printf("0\n");
-      break;
+      continue;
     }
  
     int index2;
@@ -55,12 +56,12 @@ void chasing(int **A[], int a, int *B[], int b, int C[], int c)
       index2 = atoi(index2ptr);
     else {
       printf("0\n");
-      break;
+      continue;
     }
  
     if (strtok(NULL, " \t\n") != NULL) {
       printf("0\n");
-      break;
+      continue;
     }
  
 #ifdef DEBUG
