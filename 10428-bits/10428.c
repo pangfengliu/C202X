@@ -8,9 +8,6 @@
 
 void getBits(uint64_t ull, bool bits[W])
 {
-#ifdef DEBUG
-  printf("%016lx\n", ull);
-#endif
   for (int i = 0; i < W; i++) {
     bits[i] = ull & 1;
     ull >>= 1;
@@ -45,14 +42,30 @@ int main()
   bool bits[W];
   
   scanf("%d", &n);
-  int row = 0;
+  int row = 0, col = 0, colLen[W];
   
-  for (int i = 0; i < K; i++) {
+  for (int r = 0; r < K; r++) {
     assert(scanf("%lu", &ull) == 1);
     getBits(ull, bits);
-    row += countRow(bits, n); 
+    row += countRow(bits, n);
+
+    if (r == 0) 
+      for (int c = 0; c < W; c++) 
+	colLen[c] = bits[c]? 1 : 0;
+    else 
+      for (int c = 0; c < W; c++) 
+	if (bits[c])
+	  colLen[c]++;
+	else {
+	  col += countSeg(colLen[c], n);
+	  colLen[c] = 0;
+	}
   }
+  for (int c = 0; c < W; c++) 
+    col += countSeg(colLen[c], n);
+    
   printf("%d\n", row);
+  printf("%d\n", col);
   
   return 0;
 }
