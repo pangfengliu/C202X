@@ -42,7 +42,7 @@ int main()
   bool bits[W];
   
   scanf("%d", &n);
-  int row = 0, col = 0, colLen[W];
+  int row = 0, col = 0, colLen[W], diag = 0, diagLen[W];
   
   for (int r = 0; r < K; r++) {
     assert(scanf("%lu", &ull) == 1);
@@ -51,8 +51,9 @@ int main()
 
     if (r == 0) 
       for (int c = 0; c < W; c++) 
-	colLen[c] = bits[c]? 1 : 0;
-    else 
+	colLen[c] = diagLen[c] = (bits[c]? 1 : 0);
+    else {
+      /* col */
       for (int c = 0; c < W; c++) 
 	if (bits[c])
 	  colLen[c]++;
@@ -60,12 +61,27 @@ int main()
 	  col += countSeg(colLen[c], n);
 	  colLen[c] = 0;
 	}
+
+      /* diag */
+      diag += countSeg(diagLen[0], n);
+      for (int c = 0; c < W - 1; c++) 
+	if (bits[c])
+	  diagLen[c] = diagLen[c + 1] + 1;
+	else {
+	  diag += countSeg(diagLen[c + 1], n);
+	  diagLen[c] = 0;
+	}
+      diagLen[W - 1] = bits[W - 1]? 1 : 0;
+    }
   }
-  for (int c = 0; c < W; c++) 
+  for (int c = 0; c < W; c++) {
     col += countSeg(colLen[c], n);
+    diag += countSeg(diagLen[c], n);
+  }
     
   printf("%d\n", row);
   printf("%d\n", col);
+  printf("%d\n", diag);
   
   return 0;
 }
