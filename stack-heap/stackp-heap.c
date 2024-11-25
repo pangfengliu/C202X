@@ -9,5 +9,6 @@ int main()
 {
   int i;
   int *iptr = foo();
+  *iptr += 8;
   return 0;
 }
