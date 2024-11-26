@@ -16,5 +16,7 @@ int main()
   int *iptr = foo();
   (*iptr) = 8;
   printf("%d\n", *iptr);
+  free(iptr);
+  printf("%d\n", *iptr);
   return 0;
 }
